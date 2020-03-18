@@ -12,11 +12,11 @@ import (
 	"strings"
 )
 
-type ErrorStracktraceTextFormatter struct {
+type UtilsFormatter struct {
 	log.TextFormatter
 }
 
-func (f *ErrorStracktraceTextFormatter) Format(entry *log.Entry) ([]byte, error) {
+func (f *UtilsFormatter) Format(entry *log.Entry) ([]byte, error) {
 	var entryError error
 	for k, v := range entry.Data {
 		if k == "error" {
