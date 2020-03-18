@@ -85,8 +85,9 @@ func (f *ErrorStracktraceTextFormatter) Format(entry *log.Entry) ([]byte, error)
 	//extract error and fields to OpenTracing log
 
 	if span != nil {
+		span.SetTag("error", true)
 		fields := []olog.Field{
-			olog.String("error", "true"),
+			olog.String("event", "error"),
 			olog.String("error.message", entry.Message),
 			olog.Error(entryError),
 			olog.String("error.stacktrace", string(openb.Bytes())),
