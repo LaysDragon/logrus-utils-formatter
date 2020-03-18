@@ -9,8 +9,18 @@
 
 ```go
 package main
-import "github.com/gin-gonic/gin"
-import log "github.com/sirupsen/logrus"
+import (
+    "github.com/LaysDragon/logrus-utils-formatter"
+    "github.com/gin-gonic/gin"
+    log "github.com/sirupsen/logrus"
+)
+
+func init(){
+	log.SetFormatter(&formatter.ErrorStracktraceTextFormatter{})
+    log.SetReportCaller(true)
+    log.SetLevel(log.InfoLevel)
+}
+
 
 
 func GinHandler(c *gin.Context) {
