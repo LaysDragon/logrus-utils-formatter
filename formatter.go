@@ -42,7 +42,7 @@ func (f *UtilsFormatter) Format(entry *log.Entry) ([]byte, error) {
 	if entryError != nil {
 
 		if _, ok := entryError.(*serrors.Error); ok {
-			b.WriteString(fmt.Sprint("error: \n"))
+			b.WriteString(fmt.Sprint("detail: \n"))
 			var stackError = entryError
 			for stackError != nil {
 				if stackUnwrapError, ok := stackError.(*serrors.Error); ok {
@@ -77,7 +77,7 @@ func (f *UtilsFormatter) Format(entry *log.Entry) ([]byte, error) {
 			}
 
 		} else {
-			b.WriteString(fmt.Sprintf("error: %+v \n", entryError))
+			b.WriteString(fmt.Sprintf("detail: %+v \n", entryError))
 		}
 
 	}
