@@ -18,11 +18,14 @@ type UtilsFormatter struct {
 
 func (f *UtilsFormatter) Format(entry *log.Entry) ([]byte, error) {
 	var entryError error
+
 	for k, v := range entry.Data {
 		if k == "error" {
 			if unpackedErr, ok := v.(error); ok {
 				entryError = unpackedErr
 				delete(entry.Data, "error")
+			} else if entry.Level == log.ErrorLevel {
+				entryError = fmt.Errorf("%v", v)
 			}
 		}
 	}
@@ -84,7 +87,7 @@ func (f *UtilsFormatter) Format(entry *log.Entry) ([]byte, error) {
 	result = b.Bytes()
 	//extract error and fields to OpenTracing log
 
-	if span != nil {
+	if span != nil && entryError != nil {
 		span.SetTag("error", true)
 		fields := []olog.Field{
 			olog.String("event", "error"),
